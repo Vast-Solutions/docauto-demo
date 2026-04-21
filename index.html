@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visionary · Documentation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --white: #FFFFFF;
+  --snow: #F8FAFC;
+  --violet-50: #F5F3FF;
+  --violet-500: #8B5CF6;
+  --slate-400: #94A3B8;
+  --slate-500: #64748B;
+  --slate-800: #1E293B;
+  --slate-900: #0F172A;
+  --font-display: 'DM Serif Display', Georgia, serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+html, body {
+  min-height: 100%;
+  font-family: var(--font-body);
+  color: var(--slate-800);
+  background: linear-gradient(180deg, var(--violet-50) 0%, var(--snow) 45%);
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 72px 32px 48px;
+}
+
+.hero {
+  max-width: 720px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.hero .eyebrow {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--violet-50);
+  color: var(--violet-500);
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: 3.8rem;
+  line-height: 1.15;
+  color: var(--slate-900);
+  margin-bottom: 18px;
+}
+
+.hero p {
+  font-size: 1.35rem;
+  color: var(--slate-500);
+  line-height: 1.6;
+}
+
+.deck-list {
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.deck-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 28px 32px;
+  background: var(--white);
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, transform 0.1s;
+}
+
+.deck-card:hover {
+  border-color: var(--violet-500);
+  transform: translateY(-1px);
+}
+
+.deck-card .left h3 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  color: var(--slate-900);
+  margin-bottom: 6px;
+}
+
+.deck-card .left .meta {
+  font-size: 1.1rem;
+  color: var(--slate-500);
+}
+
+.deck-card .arrow {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  color: var(--slate-400);
+}
+
+.footer {
+  margin-top: 72px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--slate-400);
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <span class="eyebrow">Platform</span>
+  <h1>Documentation Automation</h1>
+  <p>Policy, pipeline, pilot. A standalone demo for May 13, 2026.</p>
+</div>
+
+<div class="deck-list">
+  <a class="deck-card" href="docauto-deck.html">
+    <div class="left">
+      <h3>Documentation Automation</h3>
+      <div class="meta">Michael Layug · May 13, 2026 · 7 slides</div>
+    </div>
+    <div class="arrow">&rarr;</div>
+  </a>
+</div>
+
+<div class="footer">visionaryauto.ai</div>
+
+</body>
+</html>
