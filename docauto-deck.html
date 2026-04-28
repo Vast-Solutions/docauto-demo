@@ -517,7 +517,6 @@ html, body {
         <li>Markdown uses a mix of URLs and relative paths. Neither points at a single shared docs domain today. <span class="linear-ref">DEV-1086</span></li>
         <li>Not all command blocks in infra docs name their target environment. Commands written for EC2 can rot at the EKS cutover, for example.</li>
         <li>No global rule for when docs are required, who writes them, or where they live.</li>
-        <li>Automation cannot enforce without policy.</li>
       </ul>
     </div>
     <div class="card card--emerald">
@@ -583,7 +582,7 @@ html, body {
 
     <h3>§4. What docs contain</h3>
     <ol>
-      <li><strong>Cross-service links use URLs.</strong> When Service A's doc refers to Service B, link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>, not <code>../service-b/docs/x.md</code>. URLs survive repo moves and environment transitions; paths do not.</li>
+      <li><strong>Cross-service links use URLs.</strong> When Service A's doc refers to Service B, link to <code>visionarywiki.gitbook.io/&lt;service&gt;/...</code>, not <code>../service-b/docs/x.md</code>. URLs survive repo moves and environment transitions; paths do not.</li>
       <li><strong>Environment tags on infra details.</strong> Any deployment, config, or ops detail names its target explicitly ("on EC2," "post-EKS migration"). Undated commands rot at cutover.</li>
       <li><strong>Snapshot dates on reference pages.</strong> Pages that document state (topology, configurations, runbooks) carry a snapshot date so readers can tell freshness at a glance.</li>
     </ol>
@@ -597,7 +596,7 @@ html, body {
     <p>The reviewer enforces honestly in the same pass as the code review. No CI gate in v1.</p>
 
     <h3>§6. Publishing</h3>
-    <p>GitBook auto-syncs from <code>main</code> to <code>docs.visionaryauto.ai</code>.</p>
+    <p>GitBook auto-syncs from <code>main</code> to <code>visionarywiki.gitbook.io</code>.</p>
     <ul>
       <li>Public <code>users/</code> at the root</li>
       <li>Access-controlled <code>dev/</code> under a private space</li>
@@ -645,8 +644,8 @@ html, body {
   </div>
 
   <div class="demo-layout">
-    <div style="display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;">
-      <img src="Images/1.svg" alt="Walkthrough diagram" style="max-width:100%;max-height:74vh;height:auto;width:auto;" />
+    <div style="display:flex;align-items:center;justify-content:center;min-height:0;height:100%;overflow:hidden;">
+      <img src="Images/1.svg" alt="Walkthrough diagram" style="max-width:100%;max-height:100%;height:auto;width:auto;object-fit:contain;" />
     </div>
     <div class="loom-frame" id="loom-frame">
       <div>
@@ -680,10 +679,7 @@ html, body {
       <ul>
         <li><code>docs/users/</code>, <code>docs/dev/</code>, <code>docs/internal/</code> scaffolded in orrery</li>
         <li><code>CLAUDE.md</code> at root with policy summary and per-path drafting guidance</li>
-        <li><code>.gitbook.yaml</code> pointing at <code>docs/users/</code></li>
         <li>PR template with docs checkbox, breaking change, target env</li>
-        <li><code>.github/workflows/doc-draft.yml</code> calls <code>anthropics/claude-code-action@v1</code></li>
-        <li>Doppler <code>docauto-pipeline</code> project; <code>CLAUDE_CODE_OAUTH_TOKEN</code> synced to orrery secrets</li>
         <li>Claude GitHub App installed on orrery</li>
       </ul>
     </div>
@@ -693,7 +689,7 @@ html, body {
         <li>Smoke-test PR to confirm Claude comments, drafts, and commits end to end</li>
         <li>Loom recording for this deck's slide 5</li>
         <li>GitBook hygiene: rename and sync audit <span class="linear-ref">DEV-1104</span></li>
-        <li>Domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1086</span></li>
+        <li>Domain cutover to <code>visionarywiki.gitbook.io</code> <span class="linear-ref">DEV-1086</span></li>
       </ul>
     </div>
   </div>
@@ -733,7 +729,7 @@ html, body {
     </div>
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
-      <p>Point <code>docs.visionaryauto.ai</code> at the GitBook <code>vs-users</code> site. A DNS CNAME swap, no content moves.</p>
+      <p>Point <code>visionarywiki.gitbook.io</code> at the GitBook <code>vs-users</code> site. A DNS CNAME swap, no content moves.</p>
       <p>Once it lands, the cross-service URL convention from §4 resolves to a real public domain. Every published doc gets stable external links instead of placeholders.</p>
     </div>
   </div>
