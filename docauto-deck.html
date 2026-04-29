@@ -411,10 +411,10 @@ html, body {
   min-height: 0;
 }
 .status-col h4 {
-  font-size: 1.25rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--slate-900);
-  margin-bottom: 14px;
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -423,9 +423,9 @@ html, body {
 .status-col ul li {
   position: relative;
   padding-left: 28px;
-  margin-bottom: 10px;
-  font-size: 1.05rem;
-  line-height: 1.5;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  line-height: 1.55;
   color: var(--slate-800);
 }
 .status-col--done ul li::before {
@@ -570,15 +570,24 @@ html, body {
       <li>The code reviewer verifies docs in the same pass as the code.</li>
       <li>No separate doc reviewer.</li>
     </ul>
+    <p><strong>Workflow when a change spans both layers:</strong></p>
+    <ol>
+      <li>Code change opens a PR in the service repo. Per-repo <code>docs/</code> updates ship in the same PR.</li>
+      <li>If the change touches knowledge-base material, a companion PR lands in <code>Visionary-Solutions/documentation</code>.</li>
+      <li>The code reviewer approves both PRs together.</li>
+    </ol>
 
     <h3>§3. Where docs live</h3>
+    <p>Two layers.</p>
+    <p><strong>Per-repo</strong> <code>docs/</code>: service-local. Lives with the code, ships in the same PR.</p>
 <pre>repo/
   docs/
     users/       # outside-facing, public GitBook space
     dev/         # on-team, private GitBook space
     internal/    # regulated/sensitive, NOT synced to GitBook
   CLAUDE.md      # orient Claude to the repo's docs</pre>
-    <p>Pick the folder by audience, not by topic.</p>
+    <p><strong>Central knowledge base</strong>: <code>Visionary-Solutions/documentation</code>. Cross-cutting material: architecture, decisions, cross-service interfaces, anything other teams or external consumers need to find. Same <code>users/</code> / <code>dev/</code> / <code>internal/</code> audience folders. GitBook <code>vs-users</code> (public) and <code>vs-docs</code> (private) sync from here.</p>
+    <p>Pick the layer by <em>who needs to find it</em>: per-repo if the answer is "this service's contributors"; central if the answer is "any other team or external consumer."</p>
 
     <h3>§4. What docs contain</h3>
     <ol>
@@ -644,8 +653,16 @@ html, body {
   </div>
 
   <div class="demo-layout">
-    <div style="display:flex;align-items:center;justify-content:center;min-height:0;height:100%;overflow:hidden;">
-      <img src="Images/1.svg" alt="Walkthrough diagram" style="max-width:100%;max-height:100%;height:auto;width:auto;object-fit:contain;" />
+    <div class="walkthrough-card">
+      <ol>
+        <li>Author edits code in a service repo and opens a PR.</li>
+        <li><code>doc-draft.yml</code> fires on the PR and runs <code>anthropics/claude-code-action@v1</code>.</li>
+        <li>Claude reads the repo's <code>CLAUDE.md</code> and the PR diff, then evaluates the change against policy §1.</li>
+        <li>If the change qualifies, Claude drafts the markdown and commits it to the PR branch. If not, Claude posts a one-line comment explaining why it skipped.</li>
+        <li>Author verifies the drafts and pushes any corrections.</li>
+        <li>Reviewer approves code and docs in the same pass. No separate doc reviewer.</li>
+        <li>On merge to main, GitBook syncs and the docs publish to the repo's space.</li>
+      </ol>
     </div>
     <div class="loom-frame" id="loom-frame">
       <div>
@@ -680,7 +697,7 @@ html, body {
         <li><code>docs/users/</code>, <code>docs/dev/</code>, <code>docs/internal/</code> scaffolded in orrery</li>
         <li><code>CLAUDE.md</code> at root with policy summary and per-path drafting guidance</li>
         <li>PR template with docs checkbox, breaking change, target env</li>
-        <li>Claude GitHub App installed on orrery</li>
+        <li>Claude GitHub App installed on orrery demo repo</li>
       </ul>
     </div>
     <div class="status-col status-col--pending">
@@ -708,7 +725,7 @@ html, body {
 
   <div class="slide-header">
     <h2>What's next</h2>
-    <p>Three decisions pace the fleet rollout. None block the orrery pilot.</p>
+    <p>Three decisions pace the fleet rollout. None block the demo pilot.</p>
   </div>
 
   <div class="card-grid card-grid--3" style="flex:1;">
@@ -724,7 +741,7 @@ html, body {
     </div>
     <div class="card card--amber">
       <h4>Fleet auth strategy <span class="linear-ref">DEV-1099</span></h4>
-      <p>How Claude authenticates across the fleet. Today the orrery pilot runs on a personal token. The decision is between a shared org key and per-owner tokens.</p>
+      <p>How Claude authenticates across the fleet. Today the demo pilot runs on a personal token. The decision is between a shared org key and per-owner tokens.</p>
       <p>Gates how a second repo onboards. Shared keys give centralized billing and pooled rate limits. Per-owner tokens skip procurement but cap rate limits per person.</p>
     </div>
     <div class="card card--violet">
