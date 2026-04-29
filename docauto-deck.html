@@ -658,7 +658,7 @@ html, body {
         <li>Author edits code in a service repo and opens a PR.</li>
         <li><code>doc-draft.yml</code> fires on the PR and runs <code>anthropics/claude-code-action@v1</code>.</li>
         <li>Claude reads the repo's <code>CLAUDE.md</code> and the PR diff, then evaluates the change against policy §1.</li>
-        <li>If the change qualifies, Claude drafts the markdown and commits it to the PR branch. If not, Claude posts a one-line comment explaining why it skipped.</li>
+        <li>Claude posts a one-line assessment comment on every run. When the change qualifies, Claude also commits drafted markdown to the PR branch.</li>
         <li>Author verifies the drafts and pushes any corrections.</li>
         <li>Reviewer approves code and docs in the same pass. No separate doc reviewer.</li>
         <li>On merge to main, GitBook syncs and the docs publish to the repo's space.</li>
