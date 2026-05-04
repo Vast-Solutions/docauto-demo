@@ -644,8 +644,32 @@ html, body {
     <p>Two sessions, two repos. The Linear issue ID is the connective tissue between code changes and documentation changes.</p>
   </div>
 
-  <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;padding:8px 0;">
-    <img src="Images/Lucid.svg" alt="High level architecture" style="max-width:100%;max-height:74vh;height:auto;width:auto;" />
+  <div class="card-grid card-grid--3" style="flex:1;">
+    <div class="card card--violet">
+      <h4>Code repos</h4>
+      <ul>
+        <li>Each service repo (e.g. scout, vision-processor) installs <code>.claude/commands/</code> with <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code>.</li>
+        <li>Code branches use <code>&lt;type&gt;/&lt;linear-id&gt;-&lt;slug&gt;</code>, for example <code>feat/SCO-142-add-oauth-login</code>.</li>
+        <li>Code repos no longer carry their own <code>docs/</code>. Docs live in the central documentation repo.</li>
+      </ul>
+    </div>
+    <div class="card card--emerald">
+      <h4><code>Visionary-Solutions/documentation</code></h4>
+      <ul>
+        <li>Single source of truth for all documentation across products.</li>
+        <li>Two audience folders: <code>user/</code> (external) and <code>dev/</code> (internal).</li>
+        <li>Each product has its own subfolder under each audience: <code>user/Scout/</code>, <code>dev/Scout/</code>, and so on.</li>
+        <li>Doc branches mirror the Linear ID: <code>docs/SCO-142-add-oauth-login</code>.</li>
+      </ul>
+    </div>
+    <div class="card card--sky">
+      <h4>Connective tissue</h4>
+      <ul>
+        <li>The Linear issue ID is the same on the code branch and the doc branch. One identifier links the two PRs.</li>
+        <li>The <code>/commit</code> session reviews the diff against the developer's description, decides whether docs are needed, and proposes both commit messages in one approval.</li>
+        <li>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> on merge.</li>
+      </ul>
+    </div>
   </div>
 </section>
 
@@ -685,7 +709,45 @@ html, body {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     SLIDE 6 · Rollout
+     SLIDE 6 · Publishing
+     ═══════════════════════════════════════════════════════ -->
+<section class="slide slide--platform" data-section="platform">
+  <div class="topbar">
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
+    <div class="topbar-section">
+      <span class="section-pill section-pill--platform">Platform</span>
+    </div>
+  </div>
+
+  <div class="slide-header">
+    <h2>Publishing</h2>
+    <p>Two folders in <code>Visionary-Solutions/documentation</code> publish to two different surfaces.</p>
+  </div>
+
+  <div class="card-grid card-grid--2" style="flex:1;">
+    <div class="card card--emerald">
+      <h4><code>user/</code> &middot; public site</h4>
+      <ul>
+        <li>Audience: external consumers, sales, stakeholders.</li>
+        <li>Path: <code>documentation/user/&lt;Product&gt;/</code> (e.g. <code>user/Scout/</code>).</li>
+        <li>GitBook space: <code>vs-users</code> (public).</li>
+        <li>Published at <code>docs.visionaryauto.ai</code>. Anyone with the URL can read.</li>
+      </ul>
+    </div>
+    <div class="card card--violet">
+      <h4><code>dev/</code> &middot; internal workspace</h4>
+      <ul>
+        <li>Audience: internal developers across teams.</li>
+        <li>Path: <code>documentation/dev/&lt;Product&gt;/</code> plus cross-cutting paths like <code>dev/Architecture/</code> and <code>dev/Decisions/</code>.</li>
+        <li>GitBook space: <code>vs-docs</code> (private).</li>
+        <li>No public URL. Readable inside the GitBook workspace by logged-in org members only.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════
+     SLIDE 7 · Rollout
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
@@ -722,7 +784,7 @@ html, body {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     SLIDE 7 · What's next
+     SLIDE 8 · What's next
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
