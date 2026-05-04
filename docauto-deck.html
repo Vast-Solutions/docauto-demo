@@ -71,7 +71,20 @@ html, body {
   font-size: 1.35rem;
   color: var(--slate-800);
   letter-spacing: 0.02em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.15s;
 }
+.topbar-brand:hover { color: var(--violet-500); }
+.topbar-brand .home-arrow {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--slate-400);
+  transition: color 0.15s;
+}
+.topbar-brand:hover .home-arrow { color: var(--violet-500); }
 .topbar-section { display: flex; align-items: center; gap: 10px; }
 
 .section-pill {
@@ -476,7 +489,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
     </div>
@@ -498,7 +511,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
     </div>
@@ -537,7 +550,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
       <span class="badge badge--progress">In Review</span>
@@ -607,7 +620,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
     </div>
@@ -628,7 +641,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
       <span class="badge badge--live">Live</span>
@@ -663,7 +676,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
     </div>
@@ -701,7 +714,7 @@ html, body {
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
-    <div class="topbar-brand"><span>Doc Automation</span></div>
+    <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
     </div>
