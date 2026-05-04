@@ -522,11 +522,11 @@ html, body {
     <div class="card card--emerald">
       <h4>What we want instead</h4>
       <ul>
-        <li>Docs ship in the same PR as the code that changed them.</li>
-        <li>Cross service references resolve through a single shared docs domain, so they survive repo moves.</li>
+        <li>Docs ship as a parallel commit alongside code, keyed by the same Linear issue ID.</li>
+        <li>One central knowledge base. Cross-service references resolve through a single shared docs domain, so they survive repo moves.</li>
         <li>Command blocks name their environment explicitly.</li>
         <li>Shared written rules for when docs are required, who writes them, and where they live.</li>
-        <li>Existing habits stay in place. Most active repos already have a <code>docs/</code> folder and a root <code>CLAUDE.md</code>. The policy formalizes what's already common.</li>
+        <li>One slash command at commit time wraps the doc decision into the developer's existing flow.</li>
       </ul>
     </div>
   </div>
@@ -545,7 +545,7 @@ html, body {
   </div>
 
   <div class="policy-doc">
-    <div class="policy-doc-section-num">DEV-1070 · v1</div>
+    <div class="policy-doc-section-num">DEV-1070 · v2</div>
     <h2>Documentation Policy</h2>
 
     <h3>§1. When docs are required</h3>
@@ -564,52 +564,40 @@ html, body {
     </ul>
 
     <h3>§2. Who is responsible</h3>
-    <ul>
-      <li>Claude reads the PR diff and drafts docs on PR open.</li>
-      <li>The PR author verifies the drafts and commits any corrections.</li>
-      <li>The code reviewer verifies docs in the same pass as the code.</li>
-      <li>No separate doc reviewer.</li>
-    </ul>
-    <p><strong>Workflow when a change spans both layers:</strong></p>
+    <p>The developer runs <code>/commit</code> at commit time. Claude reviews the working diff against the developer's description, decides whether documentation impact exists, and proposes documentation updates for approval before committing.</p>
+    <p>The same code reviewer approves both PRs together. No separate doc reviewer.</p>
+    <p><strong>When documentation impact exists, two parallel commits are produced, keyed off the same Linear issue ID:</strong></p>
     <ol>
-      <li>Code change opens a PR in the service repo. Per-repo <code>docs/</code> updates ship in the same PR.</li>
-      <li>If the change touches knowledge-base material, a companion PR lands in <code>Visionary-Solutions/documentation</code>.</li>
-      <li>The code reviewer approves both PRs together.</li>
+      <li>Code commit on the service repo branch (e.g. <code>feat/SCO-142-add-oauth-login</code>)</li>
+      <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-142-add-oauth-login</code>)</li>
     </ol>
+    <p>If a change has no documentation impact, <code>/commit</code> skips the doc branch. The reviewer verifies the absence is honest in the same pass as the code review.</p>
 
     <h3>§3. Where docs live</h3>
-    <p>Two layers.</p>
-    <p><strong>Per-repo</strong> <code>docs/</code>: service-local. Lives with the code, ships in the same PR.</p>
-<pre>repo/
-  docs/
-    users/       # outside-facing, public GitBook space
-    dev/         # on-team, private GitBook space
-    internal/    # regulated/sensitive, NOT synced to GitBook
-  CLAUDE.md      # orient Claude to the repo's docs</pre>
-    <p><strong>Central knowledge base</strong>: <code>Visionary-Solutions/documentation</code>. Cross-cutting material: architecture, decisions, cross-service interfaces, anything other teams or external consumers need to find. Same <code>users/</code> / <code>dev/</code> / <code>internal/</code> audience folders. GitBook <code>vs-users</code> (public) and <code>vs-docs</code> (private) sync from here.</p>
-    <p>Pick the layer by <em>who needs to find it</em>: per-repo if the answer is "this service's contributors"; central if the answer is "any other team or external consumer."</p>
+    <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
+<pre>documentation/
+├── user/                  # outside-facing, public GitBook space
+│   └── &lt;Product&gt;/         # e.g. Scout/, VisionProcessor/
+└── dev/                   # on-team, private GitBook space
+    └── &lt;Product&gt;/</pre>
+    <p>Pick the folder by audience. Use <code>user/</code> for external consumers, sales, or stakeholders. Use <code>dev/</code> for internal developers across teams.</p>
+    <p>Each product gets its own subfolder under each audience. Cross-cutting documentation that isn't owned by a single product (architecture, decisions, cross-service interfaces) lives at the audience level, for example <code>dev/Architecture/</code> or <code>dev/Decisions/</code>.</p>
 
     <h3>§4. What docs contain</h3>
     <ol>
-      <li><strong>Cross-service links use URLs.</strong> When Service A's doc refers to Service B, link to <code>visionarywiki.gitbook.io/&lt;service&gt;/...</code>, not <code>../service-b/docs/x.md</code>. URLs survive repo moves and environment transitions; paths do not.</li>
+      <li><strong>Cross-service links use URLs.</strong> When Service A's doc refers to Service B, link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>, not relative file paths. URLs survive repo moves and environment transitions; paths do not.</li>
       <li><strong>Environment tags on infra details.</strong> Any deployment, config, or ops detail names its target explicitly ("on EC2," "post-EKS migration"). Undated commands rot at cutover.</li>
-      <li><strong>Snapshot dates on reference pages.</strong> Pages that document state (topology, configurations, runbooks) carry a snapshot date so readers can tell freshness at a glance.</li>
     </ol>
 
     <h3>§5. Enforcement</h3>
-    <p>One checkbox in the PR template:</p>
-    <ul>
-      <li><strong>docs updated</strong>, or</li>
-      <li><strong>N/A</strong> with a reason</li>
-    </ul>
-    <p>The reviewer enforces honestly in the same pass as the code review. No CI gate in v1.</p>
+    <p><code>/commit</code> is the gate. The developer cannot complete the commit step without making an explicit decision on documentation impact. Skipping <code>/commit</code> (committing manually with <code>git commit</code>) is a policy violation; the reviewer flags PRs that didn't go through it.</p>
+    <p>When documentation impact exists, both PRs (code repo + <code>documentation/</code>) are approved as a unit. No CI gate in v2.</p>
 
     <h3>§6. Publishing</h3>
-    <p>GitBook auto-syncs from <code>main</code> to <code>visionarywiki.gitbook.io</code>.</p>
+    <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> to <code>docs.visionaryauto.ai</code>.</p>
     <ul>
-      <li>Public <code>users/</code> at the root</li>
+      <li>Public <code>user/</code> at the root</li>
       <li>Access-controlled <code>dev/</code> under a private space</li>
-      <li><code>internal/</code> excluded from sync</li>
     </ul>
   </div>
 </section>
@@ -627,7 +615,7 @@ html, body {
 
   <div class="slide-header">
     <h2>High level architecture</h2>
-    <p>Author opens a PR. Claude reads the diff and the policy, and either drafts docs into the same PR or explains why not.</p>
+    <p>Two sessions, two repos. The Linear issue ID is the connective tissue between code changes and documentation changes.</p>
   </div>
 
   <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0;overflow:hidden;padding:8px 0;">
@@ -649,19 +637,19 @@ html, body {
 
   <div class="slide-header">
     <h2>Walkthrough</h2>
-    <p>PR-triggered drafting, end to end. <span class="linear-ref">DEV-1075</span></p>
+    <p>From <code>/start-task</code> to <code>/commit</code>, end to end. <span class="linear-ref">DEV-1075</span></p>
   </div>
 
   <div class="demo-layout">
     <div class="walkthrough-card">
       <ol>
-        <li>Author edits code in a service repo and opens a PR.</li>
-        <li><code>doc-draft.yml</code> fires on the PR and runs <code>anthropics/claude-code-action@v1</code>.</li>
-        <li>Claude reads the repo's <code>CLAUDE.md</code> and the PR diff, then evaluates the change against policy §1.</li>
-        <li>Claude posts a one-line assessment comment on every run. When the change qualifies, Claude also commits drafted markdown to the PR branch.</li>
-        <li>Author verifies the drafts and pushes any corrections.</li>
-        <li>Reviewer approves code and docs in the same pass. No separate doc reviewer.</li>
-        <li>On merge to main, GitBook syncs and the docs publish to the repo's space.</li>
+        <li>Developer runs <code>/start-task</code> (or <code>/pull-task</code>). Claude creates a Linear issue, generates up to five subtasks, transitions the parent to In Progress, and cuts the scout branch.</li>
+        <li>Developer writes code through the subtasks. Session ends with the working tree dirty, no commit.</li>
+        <li>Developer opens a fresh session and runs <code>/commit</code>. Claude reads the diff, parses the Linear issue ID from the branch name, and reconciles the diff against the developer's description.</li>
+        <li>Claude decides whether documentation impact exists. If it does, Claude proposes the doc branch name, the doc edits in <code>Visionary-Solutions/documentation</code>, and the doc commit message alongside the scout commit message in a single approval block.</li>
+        <li>On approval, commits land in both repos. The Linear issue transitions to In Review.</li>
+        <li>Developer pushes both repos manually and opens PRs in each. The same code reviewer approves both PRs together.</li>
+        <li>On merge, GitBook syncs <code>documentation/</code> and the docs publish to <code>docs.visionaryauto.ai</code>.</li>
       </ol>
     </div>
     <div class="loom-frame" id="loom-frame">
@@ -683,26 +671,26 @@ html, body {
 
   <div class="slide-header">
     <h2>Rollout</h2>
-    <p>Pilot is live on orrery. Fleet adoption is pull based.</p>
+    <p>v2 is on the ratification track. Fleet adoption is pull based.</p>
   </div>
 
   <div class="status-strip">
     <div class="status-col status-col--done">
-      <h4>Pilot infrastructure <span class="badge badge--live">Live</span></h4>
+      <h4>Built <span class="badge badge--live">Live</span></h4>
       <ul>
-        <li><code>docs/users/</code>, <code>docs/dev/</code>, <code>docs/internal/</code> scaffolded in orrery</li>
-        <li><code>CLAUDE.md</code> at root with policy summary and per-path drafting guidance</li>
-        <li>PR template with docs checkbox, breaking change, target env</li>
-        <li>Claude GitHub App installed on orrery demo repo</li>
+        <li>Policy v2 drafted and aligned with workflow v7 <span class="linear-ref">DEV-1070</span></li>
+        <li><code>Visionary-Solutions/documentation</code> as the single doc source of truth</li>
+        <li>GitBook spaces <code>vs-users</code> (public) and <code>vs-docs</code> (private)</li>
+        <li><code>/commit</code> walkthrough recorded end to end (see slide 5)</li>
       </ul>
     </div>
     <div class="status-col status-col--pending">
-      <h4>Pilot outstanding <span class="badge badge--progress">In Progress</span></h4>
+      <h4>Outstanding <span class="badge badge--progress">In Progress</span></h4>
       <ul>
-        <li>Smoke-test PR to confirm Claude comments, drafts, and commits end to end</li>
-        <li>Loom recording for this deck's slide 5</li>
-        <li>GitBook hygiene: rename and sync audit <span class="linear-ref">DEV-1104</span></li>
-        <li>Domain cutover to <code>visionarywiki.gitbook.io</code> <span class="linear-ref">DEV-1086</span></li>
+        <li>Ratify v2 with a senior engineer outside the authoring team <span class="linear-ref">DEV-1071</span></li>
+        <li>Ship <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> as <code>.claude/commands/</code> <span class="linear-ref">DEV-1106</span></li>
+        <li>Provision <code>documentation/</code> with the v2 folder structure <span class="linear-ref">DEV-1107</span></li>
+        <li>GitBook hygiene and domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1086</span></li>
       </ul>
     </div>
   </div>
@@ -736,9 +724,9 @@ html, body {
       <p>Removes the duplicate-space confusion in GitBook and signals the canonical-direction shift to anyone reading along. Brings GitBook to a clean state for the domain cutover.</p>
     </div>
     <div class="card card--amber">
-      <h4>Fleet auth strategy <span class="linear-ref">DEV-1099</span></h4>
-      <p>How Claude authenticates across the fleet. Today the demo pilot runs on a personal token. The decision is between a shared org key and per-owner tokens.</p>
-      <p>Gates how a second repo onboards. Shared keys give centralized billing and pooled rate limits. Per-owner tokens skip procurement but cap rate limits per person.</p>
+      <h4>Slash commands <span class="linear-ref">DEV-1106</span></h4>
+      <p>Build <code>/start-task</code>, <code>/pull-task</code>, and <code>/commit</code> as <code>.claude/commands/</code> in scout and any code repo onboarding the policy.</p>
+      <p>Gates the v2 pilot. Without the commands shipped, there's no enforcement gate, only the policy text. Each repo opts in by installing the commands.</p>
     </div>
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
