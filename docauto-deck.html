@@ -312,6 +312,153 @@ html, body {
   color: var(--slate-800);
 }
 
+/* Slide 3 summary + shrunken artifact layout */
+.policy-summary-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 18px;
+  flex: 1;
+  min-height: 0;
+}
+.policy-highlights {
+  background: var(--white);
+  border: 1px solid #E2E8F0;
+  border-radius: 12px;
+  padding: 30px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow-y: auto;
+  min-height: 0;
+}
+.policy-highlights h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-bottom: 4px;
+}
+.policy-highlights ul { list-style: none; padding: 0; margin: 0; }
+.policy-highlights ul li {
+  position: relative;
+  padding-left: 22px;
+  margin-bottom: 16px;
+  font-size: 1.15rem;
+  line-height: 1.55;
+  color: var(--slate-800);
+}
+.policy-highlights ul li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--violet-500);
+}
+.policy-highlights ul li strong { color: var(--slate-900); }
+.policy-highlights code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: var(--snow);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: var(--slate-800);
+}
+
+.policy-artifact {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: 100%;
+}
+.policy-doc-mini {
+  width: 100%;
+  background: var(--white);
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 16px 22px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+  overflow-y: auto;
+  max-height: 100%;
+  font-family: var(--font-body);
+  position: relative;
+}
+.policy-doc-mini::after {
+  content: 'Artifact';
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--slate-400);
+  font-weight: 500;
+}
+.policy-doc-mini .policy-doc-section-num {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--violet-500);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.policy-doc-mini h2 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--slate-900);
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.policy-doc-mini h3 {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--slate-900);
+  margin-top: 9px;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.policy-doc-mini p {
+  font-size: 0.62rem;
+  line-height: 1.45;
+  color: var(--slate-700);
+  margin-bottom: 4px;
+}
+.policy-doc-mini ul,
+.policy-doc-mini ol {
+  padding-left: 14px;
+  margin: 0 0 6px 0;
+}
+.policy-doc-mini ul li,
+.policy-doc-mini ol li {
+  font-size: 0.62rem;
+  line-height: 1.4;
+  color: var(--slate-700);
+  margin-bottom: 2px;
+}
+.policy-doc-mini pre {
+  background: var(--snow);
+  border: 1px solid #E2E8F0;
+  padding: 5px 10px;
+  font-size: 0.5rem;
+  line-height: 1.4;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin: 4px 0 6px;
+  font-family: var(--font-mono);
+}
+.policy-doc-mini code {
+  font-family: var(--font-mono);
+  font-size: 0.95em;
+  background: var(--snow);
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+.policy-doc-mini strong { color: var(--slate-900); }
+
 .mermaid-wrap {
   flex: 1;
   min-height: 0;
@@ -559,72 +706,86 @@ html, body {
 </section>
 
 <!-- ═══════════════════════════════════════════════════════
-     SLIDE 3 · The Policy (full literal doc)
+     SLIDE 3 · The Policy (highlights + shrunken artifact)
      ═══════════════════════════════════════════════════════ -->
 <section class="slide slide--platform" data-section="platform">
   <div class="topbar">
     <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
-      <span class="badge badge--progress">In Review</span>
+      <span class="badge badge--live">Ratified</span>
     </div>
   </div>
 
-  <div class="policy-doc">
-    <div class="policy-doc-section-num">DEV-1070 · v2</div>
+  <div class="slide-header">
     <h2>Documentation Policy</h2>
+    <p>v2 is short by design. Clear scope, central source of truth, low-friction enforcement.</p>
+  </div>
 
-    <h3>§1. When docs are required</h3>
-    <p><strong>Required</strong></p>
-    <ul>
-      <li>New user-facing feature or capability</li>
-      <li>Breaking change to a public API or interface</li>
-      <li>New service or infrastructure component</li>
-      <li>Config change that affects other services</li>
-    </ul>
-    <p><strong>Not required</strong></p>
-    <ul>
-      <li>Bug fixes with no user-visible behavior change</li>
-      <li>Refactors that preserve existing behavior</li>
-      <li>Dependency bumps, internal tooling, CI-only changes</li>
-    </ul>
+  <div class="policy-summary-grid">
+    <div class="policy-highlights">
+      <h4>Why it works as a governing document</h4>
+      <ul>
+        <li><strong>Decisive.</strong> Required vs not-required is explicit. No judgment calls at PR time.</li>
+        <li><strong>Centralized.</strong> All docs live in <code>Visionary-Solutions/documentation</code>. No per-repo <code>docs/</code> to drift.</li>
+        <li><strong>Low-friction.</strong> The doc decision rides on the existing commit gesture. No new gate, no separate doc workflow to maintain.</li>
+        <li><strong>Audience-driven.</strong> <code>user/</code> and <code>dev/</code> pick by who needs to find the doc, not by what topic it covers.</li>
+        <li><strong>Honest.</strong> v2 names what it doesn't solve (the emergency hotfix path) so v3 can pick it up.</li>
+      </ul>
+    </div>
+    <div class="policy-artifact">
+      <div class="policy-doc-mini">
+        <div class="policy-doc-section-num">DEV-1070 · v2</div>
+        <h2>Documentation Policy</h2>
 
-    <h3>§2. Who is responsible</h3>
-    <p>The developer runs <code>/commit</code> at commit time. Claude reviews the working diff against the developer's description, decides whether documentation impact exists, and proposes documentation updates for approval before committing.</p>
-    <p>The same code reviewer approves both PRs together. No separate doc reviewer.</p>
-    <p><strong>When documentation impact exists, two parallel commits are produced, keyed off the same Linear issue ID:</strong></p>
-    <ol>
-      <li>Code commit on the service repo branch (e.g. <code>feat/SCO-142-add-oauth-login</code>)</li>
-      <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-142-add-oauth-login</code>)</li>
-    </ol>
-    <p>If a change has no documentation impact, <code>/commit</code> skips the doc branch. The reviewer verifies the absence is honest in the same pass as the code review.</p>
+        <h3>§1. When docs are required</h3>
+        <p><strong>Required</strong></p>
+        <ul>
+          <li>New user-facing feature or capability</li>
+          <li>Breaking change to a public API or interface</li>
+          <li>New service or infrastructure component</li>
+          <li>Config change that affects other services</li>
+        </ul>
+        <p><strong>Not required</strong></p>
+        <ul>
+          <li>Bug fixes with no user-visible behavior change</li>
+          <li>Refactors that preserve existing behavior</li>
+          <li>Dependency bumps, internal tooling, CI-only changes</li>
+        </ul>
 
-    <h3>§3. Where docs live</h3>
-    <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
+        <h3>§2. Who is responsible</h3>
+        <p>The developer runs <code>/commit</code> at commit time. Claude reviews the diff, decides whether documentation impact exists, and proposes documentation updates for approval before committing.</p>
+        <p>The same code reviewer approves both PRs together. No separate doc reviewer.</p>
+        <p><strong>When documentation impact exists, two parallel commits are produced, keyed off the same Linear issue ID:</strong></p>
+        <ol>
+          <li>Code commit on the service repo branch (e.g. <code>feat/SCO-142-add-oauth-login</code>)</li>
+          <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-142-add-oauth-login</code>)</li>
+        </ol>
+        <p>If a change has no documentation impact, <code>/commit</code> skips the doc branch.</p>
+
+        <h3>§3. Where docs live</h3>
+        <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
 <pre>documentation/
 ├── user/                  # outside-facing, public GitBook space
-│   └── &lt;Product&gt;/         # e.g. Scout/, VisionProcessor/
+│   └── &lt;Product&gt;/
 └── dev/                   # on-team, private GitBook space
     └── &lt;Product&gt;/</pre>
-    <p>Pick the folder by audience. Use <code>user/</code> for external consumers, sales, or stakeholders. Use <code>dev/</code> for internal developers across teams.</p>
-    <p>Each product gets its own subfolder under each audience. Cross-cutting documentation that isn't owned by a single product (architecture, decisions, cross-service interfaces) lives at the audience level, for example <code>dev/Architecture/</code> or <code>dev/Decisions/</code>.</p>
+        <p>Pick the folder by audience. <code>user/</code> for external consumers. <code>dev/</code> for internal developers.</p>
 
-    <h3>§4. What docs contain</h3>
-    <ol>
-      <li><strong>Cross-service links use URLs.</strong> When Service A's doc refers to Service B, link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>, not relative file paths. URLs survive repo moves and environment transitions; paths do not.</li>
-      <li><strong>Environment tags on infra details.</strong> Any deployment, config, or ops detail names its target explicitly ("on EC2," "post-EKS migration"). Undated commands rot at cutover.</li>
-    </ol>
+        <h3>§4. What docs contain</h3>
+        <ol>
+          <li><strong>Cross-service links use URLs.</strong> Link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>, not relative file paths.</li>
+          <li><strong>Environment tags on infra details.</strong> Name the target explicitly ("on EC2," "post-EKS migration").</li>
+        </ol>
 
-    <h3>§5. Enforcement</h3>
-    <p><code>/commit</code> is the gate. The developer cannot complete the commit step without making an explicit decision on documentation impact. Skipping <code>/commit</code> (committing manually with <code>git commit</code>) is a policy violation; the reviewer flags PRs that didn't go through it.</p>
-    <p>When documentation impact exists, both PRs (code repo + <code>documentation/</code>) are approved as a unit. No CI gate in v2.</p>
+        <h3>§5. Enforcement</h3>
+        <p><code>/commit</code> is the gate. Skipping it is a policy violation. The reviewer flags PRs that didn't go through it.</p>
+        <p>When documentation impact exists, both PRs are approved as a unit. No CI gate in v2.</p>
 
-    <h3>§6. Publishing</h3>
-    <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> to <code>docs.visionaryauto.ai</code>.</p>
-    <ul>
-      <li>Public <code>user/</code> at the root</li>
-      <li>Access-controlled <code>dev/</code> under a private space</li>
-    </ul>
+        <h3>§6. Publishing</h3>
+        <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> to <code>docs.visionaryauto.ai</code>. <code>user/</code> public at the root, <code>dev/</code> access-controlled under a private space.</p>
+      </div>
+    </div>
   </div>
 </section>
 
