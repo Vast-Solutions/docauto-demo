@@ -3,152 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visionary · Documentation</title>
+<title>Visionary — DocAuto Hub</title>
+<meta name="description" content="Visionary Solutions — May 13 Documentation Automation demo and roadmap.">
+<meta property="og:title" content="Visionary — DocAuto Hub">
+<meta property="og:type" content="website">
+<meta name="robots" content="noindex, nofollow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-:root {
-  --white: #FFFFFF;
-  --snow: #F8FAFC;
-  --violet-50: #F5F3FF;
-  --violet-500: #8B5CF6;
-  --slate-400: #94A3B8;
-  --slate-500: #64748B;
-  --slate-800: #1E293B;
-  --slate-900: #0F172A;
-  --font-display: 'DM Serif Display', Georgia, serif;
-  --font-body: 'Plus Jakarta Sans', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#FFFFFF;--snow:#F8FAFC;--ice:#F0F7FF;
+  --sky-50:#E0F2FE;--sky-100:#BAE6FD;--sky-200:#7DD3FC;--sky-400:#38BDF8;--sky-500:#0EA5E9;--sky-600:#0284C7;--sky-700:#0369A1;
+  --slate-50:#F8FAFC;--slate-100:#F1F5F9;--slate-200:#E2E8F0;--slate-300:#CBD5E1;--slate-400:#94A3B8;--slate-500:#64748B;--slate-600:#475569;--slate-700:#334155;--slate-800:#1E293B;--slate-900:#0F172A;
+  --amber-50:#FFFBEB;--amber-100:#FDE68A;--amber-500:#F59E0B;--amber-600:#D97706;
+  --emerald-50:#ECFDF5;--emerald-500:#10B981;--emerald-600:#059669;
+  --rose-50:#FFF1F2;--rose-500:#F43F5E;
+  --violet-50:#F5F3FF;--violet-500:#8B5CF6;--violet-600:#7C3AED;
+  --teal-50:#F0FDFA;--teal-500:#14B8A6;--teal-600:#0D9488;
+  --indigo-50:#EEF2FF;--indigo-500:#6366F1;--indigo-600:#4F46E5;
+  --font-display:'DM Serif Display',Georgia,serif;
+  --font-body:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+  --shadow-card:0 1px 3px rgba(15,23,42,.04),0 4px 14px rgba(15,23,42,.06);
+  --shadow-hover:0 10px 30px rgba(15,23,42,.08),0 4px 12px rgba(15,23,42,.06);
+  --radius-sm:8px;--radius-md:12px;--radius-lg:16px;
 }
+html{font-size:18px;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font-body);color:var(--slate-800);background:var(--snow);min-height:100vh}
+body::before{content:'';position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(14,165,233,.06) 0%,transparent 70%),radial-gradient(ellipse 60% 50% at 85% 80%,rgba(139,92,246,.04) 0%,transparent 70%),linear-gradient(180deg,var(--white) 0%,var(--ice) 100%)}
 
-html, body {
-  min-height: 100%;
-  font-family: var(--font-body);
-  color: var(--slate-800);
-  background: linear-gradient(180deg, var(--violet-50) 0%, var(--snow) 45%);
+.wrap{max-width:1200px;margin:0 auto;padding:clamp(40px,6vh,72px) clamp(24px,5vw,64px) 60px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;padding-bottom:16px;border-bottom:1px solid var(--slate-200);margin-bottom:clamp(32px,5vh,56px)}
+.topbar-brand{font-family:var(--font-display);font-size:1.1rem;color:var(--slate-500)}
+.topbar-brand span{color:var(--sky-600)}
+.topbar-meta{font-size:.75rem;color:var(--slate-400);letter-spacing:.04em;text-transform:uppercase;font-weight:500}
+
+.hero{margin-bottom:clamp(32px,5vh,56px)}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,5vw,3.6rem);color:var(--slate-900);line-height:1.1;margin-bottom:16px}
+.hero h1 em{font-style:italic;color:var(--sky-600)}
+.hero p{font-size:clamp(1rem,1.25vw,1.15rem);color:var(--slate-500);max-width:680px;line-height:1.6}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(16px,2vw,22px);margin-bottom:clamp(32px,5vh,48px);max-width:960px;margin-left:auto;margin-right:auto}
+@media (max-width:720px){.grid{grid-template-columns:1fr}}
+
+.deck-card{
+  background:var(--white);border:1px solid var(--slate-200);border-radius:var(--radius-lg);
+  padding:clamp(20px,2.4vw,28px);text-decoration:none;color:inherit;
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+  transition:all .3s cubic-bezier(.4,0,.2,1);min-height:200px;
 }
+.deck-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--slate-300);transition:all .3s}
+.deck-card:hover{border-color:var(--sky-200);box-shadow:var(--shadow-hover);transform:translateY(-3px)}
+.deck-card--violet::before{background:var(--violet-500)}
+.deck-card--sky::before{background:var(--sky-500)}
 
-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 72px 32px 48px;
-}
+.deck-card .pill{display:inline-flex;align-items:center;padding:4px 10px;border-radius:20px;font-size:.65rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;align-self:flex-start}
+.pill--violet{background:var(--violet-50);color:var(--violet-600)}
+.pill--sky{background:var(--sky-50);color:var(--sky-600);border:1px solid var(--sky-100)}
 
-.hero {
-  max-width: 720px;
-  text-align: center;
-  margin-bottom: 48px;
-}
+.deck-card h3{font-family:var(--font-display);font-size:clamp(1.35rem,1.8vw,1.6rem);color:var(--slate-900);line-height:1.2;margin-bottom:8px}
+.deck-card p{font-size:.88rem;color:var(--slate-500);line-height:1.55;flex:1}
+.deck-card .arrow{display:inline-flex;align-items:center;gap:6px;font-size:.8rem;font-weight:600;color:var(--slate-500);transition:all .25s}
+.deck-card:hover .arrow{color:var(--sky-600);gap:10px}
+.deck-card .arrow::after{content:'\2192';font-size:1rem}
+.deck-card .deck-meta{margin-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.deck-card .speaker{font-size:.62rem;font-weight:400;color:var(--slate-300);letter-spacing:.02em}
+.deck-card .speaker em{font-style:normal;color:var(--slate-400);font-weight:500}
 
-.hero .eyebrow {
-  display: inline-block;
-  padding: 6px 18px;
-  border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--violet-50);
-  color: var(--violet-500);
-  margin-bottom: 24px;
-}
+.footer{padding-top:clamp(28px,4vh,40px);border-top:1px solid var(--slate-200);display:flex;justify-content:space-between;align-items:center;font-size:.75rem;color:var(--slate-400)}
+.footer .brand{font-family:var(--font-display);color:var(--slate-500)}
 
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: 3.8rem;
-  line-height: 1.15;
-  color: var(--slate-900);
-  margin-bottom: 18px;
-}
-
-.hero p {
-  font-size: 1.35rem;
-  color: var(--slate-500);
-  line-height: 1.6;
-}
-
-.deck-list {
-  width: 100%;
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.deck-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 32px;
-  background: var(--white);
-  border: 1px solid #E2E8F0;
-  border-radius: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.15s, transform 0.1s;
-}
-
-.deck-card:hover {
-  border-color: var(--violet-500);
-  transform: translateY(-1px);
-}
-
-.deck-card .left h3 {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  color: var(--slate-900);
-  margin-bottom: 6px;
-}
-
-.deck-card .left .meta {
-  font-size: 1.1rem;
-  color: var(--slate-500);
-}
-
-.deck-card .arrow {
-  font-family: var(--font-mono);
-  font-size: 1.6rem;
-  color: var(--slate-400);
-}
-
-.footer {
-  margin-top: 72px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--slate-400);
+@media (max-width:640px){
+  .topbar{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer{flex-direction:column;gap:8px;align-items:flex-start}
 }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <span class="eyebrow">Platform</span>
-  <h1>Documentation Automation</h1>
-  <p>Policy, pipeline, pilot. A standalone demo for May 13, 2026.</p>
-</div>
+<div class="wrap">
 
-<div class="deck-list">
-  <a class="deck-card" href="docauto-deck.html">
-    <div class="left">
+  <div class="topbar">
+    <div class="topbar-brand">Visionary <span>Solutions</span></div>
+    <div class="topbar-meta">May 13 &middot; DocAuto Demo</div>
+  </div>
+
+  <div class="hero">
+    <h1>Documentation <em>Automation</em>.</h1>
+    <p>Policy, workflow, pilot. A standalone demo for May 13, 2026, plus what comes next on the platform thread.</p>
+  </div>
+
+  <div class="grid">
+
+    <a href="docauto-deck.html" class="deck-card deck-card--violet">
+      <span class="pill pill--violet">Platform</span>
       <h3>Documentation Automation</h3>
-      <div class="meta">Michael Layug · May 13, 2026 · 7 slides</div>
-    </div>
-    <div class="arrow">&rarr;</div>
-  </a>
-  <a class="deck-card" href="roadmap.html">
-    <div class="left">
-      <h3>Roadmap</h3>
-      <div class="meta">What's coming after this · 1 page</div>
-    </div>
-    <div class="arrow">&rarr;</div>
-  </a>
+      <p>Policy v2 ratification, workflow v7 adoption, and the pilot. Single source of truth in <code>Visionary-Solutions/documentation</code>.</p>
+      <div class="deck-meta"><span class="speaker">Speaker &middot; <em>Michael</em></span><span class="arrow">Open</span></div>
+    </a>
+
+    <a href="roadmap.html" class="deck-card deck-card--sky">
+      <span class="pill pill--sky">Roadmap</span>
+      <h3>Roadmap items</h3>
+      <p>Onboarding, DevOps, Workflow-as-a-Service, Developer Platform &amp; IDP, and HPE Greenlake hybrid architecture.</p>
+      <div class="deck-meta"><span class="speaker">One pager</span><span class="arrow">Open</span></div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <span class="brand">Visionary Solutions</span>
+    <span>Confidential</span>
+  </div>
+
 </div>
 
-<div class="footer">visionaryauto.ai</div>
-
+<!-- Password gate -->
+<div id="authGate" style="position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;transition:opacity .4s ease">
+  <div style="text-align:center;max-width:360px;padding:0 24px">
+    <div style="margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <svg width="52" height="52" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="18" fill="url(#vs-grad-idx)"/>
+        <g transform="translate(50,50) rotate(45)"><rect x="-26" y="-26" width="52" height="52" rx="6" stroke="white" stroke-width="3" fill="none"/></g>
+        <circle cx="50" cy="50" r="14" stroke="white" stroke-width="2.5" fill="none"/>
+        <circle cx="50" cy="50" r="5" fill="white"/>
+        <ellipse cx="50" cy="50" rx="22" ry="12" stroke="white" stroke-width="2" fill="none"/>
+        <defs><linearGradient id="vs-grad-idx" x1="0" y1="0" x2="100" y2="100"><stop stop-color="#1E3A5F"/><stop offset="1" stop-color="#0F172A"/></linearGradient></defs>
+      </svg>
+      <div style="font-family:var(--font-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.6rem;color:var(--slate-400)">Visionary Solutions</div>
+    </div>
+    <h2 style="font-family:var(--font-display);font-size:1.8rem;color:var(--slate-900);margin-bottom:8px">DocAuto Demo</h2>
+    <p style="font-size:.9rem;color:var(--slate-500);margin-bottom:24px">Enter the password to continue.</p>
+    <form id="authForm" style="display:flex;flex-direction:column;gap:12px">
+      <input id="authInput" type="password" placeholder="Password" autocomplete="off" style="padding:10px 16px;border:1.5px solid var(--slate-200);border-radius:8px;font-family:var(--font-body);font-size:.95rem;color:var(--slate-800);outline:none;transition:border-color .2s;background:var(--snow)">
+      <button type="submit" style="padding:10px 16px;border:none;border-radius:8px;background:var(--sky-500);color:white;font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:background .2s">Continue</button>
+      <p id="authError" style="font-size:.8rem;color:var(--rose-500);display:none;margin:0">Incorrect password. Try again.</p>
+    </form>
+  </div>
+  <p style="font-size:.7rem;color:var(--slate-400)">Visionary Solutions &middot; Confidential</p>
+</div>
+<script>
+(function(){
+  const HASH='809a9eb55c301324bc4c6132a3fc45b0b02c8ea4bf481a2cfd27fc7bcfe575e7';
+  const KEY='vs_auth';
+  async function sha256(str){
+    const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function unlock(){
+    const gate=document.getElementById('authGate');
+    gate.style.opacity='0';
+    setTimeout(()=>gate.remove(),400);
+  }
+  if(sessionStorage.getItem(KEY)==='1'){unlock();return}
+  document.getElementById('authForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    const val=document.getElementById('authInput').value;
+    const h=await sha256(val);
+    if(h===HASH){
+      sessionStorage.setItem(KEY,'1');
+      unlock();
+    }else{
+      document.getElementById('authError').style.display='block';
+      document.getElementById('authInput').style.borderColor='var(--rose-500)';
+      document.getElementById('authInput').value='';
+      document.getElementById('authInput').focus();
+    }
+  });
+  document.getElementById('authInput').focus();
+})();
+</script>
 </body>
 </html>

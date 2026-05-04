@@ -216,5 +216,61 @@ body {
   &nbsp;·&nbsp; visionaryauto.ai
 </div>
 
+<!-- Password gate -->
+<div id="authGate" style="position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px;transition:opacity .4s ease">
+  <div style="text-align:center;max-width:360px;padding:0 24px">
+    <div style="margin:0 auto 16px;display:flex;flex-direction:column;align-items:center;gap:10px">
+      <svg width="52" height="52" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100" height="100" rx="18" fill="url(#vs-grad-rm)"/>
+        <g transform="translate(50,50) rotate(45)"><rect x="-26" y="-26" width="52" height="52" rx="6" stroke="white" stroke-width="3" fill="none"/></g>
+        <circle cx="50" cy="50" r="14" stroke="white" stroke-width="2.5" fill="none"/>
+        <circle cx="50" cy="50" r="5" fill="white"/>
+        <ellipse cx="50" cy="50" rx="22" ry="12" stroke="white" stroke-width="2" fill="none"/>
+        <defs><linearGradient id="vs-grad-rm" x1="0" y1="0" x2="100" y2="100"><stop stop-color="#1E3A5F"/><stop offset="1" stop-color="#0F172A"/></linearGradient></defs>
+      </svg>
+      <div style="font-family:var(--font-body);font-weight:600;letter-spacing:.12em;text-transform:uppercase;font-size:.6rem;color:var(--slate-400)">Visionary Solutions</div>
+    </div>
+    <h2 style="font-family:var(--font-display);font-size:1.8rem;color:var(--slate-900);margin-bottom:8px">DocAuto Demo</h2>
+    <p style="font-size:.9rem;color:var(--slate-500);margin-bottom:24px">Enter the password to continue.</p>
+    <form id="authForm" style="display:flex;flex-direction:column;gap:12px">
+      <input id="authInput" type="password" placeholder="Password" autocomplete="off" style="padding:10px 16px;border:1.5px solid #E2E8F0;border-radius:8px;font-family:var(--font-body);font-size:.95rem;color:var(--slate-800);outline:none;transition:border-color .2s;background:var(--snow)">
+      <button type="submit" style="padding:10px 16px;border:none;border-radius:8px;background:var(--violet-500);color:white;font-family:var(--font-body);font-size:.9rem;font-weight:600;cursor:pointer;transition:background .2s">Continue</button>
+      <p id="authError" style="font-size:.8rem;color:#F43F5E;display:none;margin:0">Incorrect password. Try again.</p>
+    </form>
+  </div>
+  <p style="font-size:.7rem;color:var(--slate-400)">Visionary Solutions &middot; Confidential</p>
+</div>
+<script>
+(function(){
+  const HASH='809a9eb55c301324bc4c6132a3fc45b0b02c8ea4bf481a2cfd27fc7bcfe575e7';
+  const KEY='vs_auth';
+  async function sha256(str){
+    const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+  }
+  function unlock(){
+    const gate=document.getElementById('authGate');
+    gate.style.opacity='0';
+    setTimeout(()=>gate.remove(),400);
+  }
+  if(sessionStorage.getItem(KEY)==='1'){unlock();return}
+  document.getElementById('authForm').addEventListener('submit',async function(e){
+    e.preventDefault();
+    const val=document.getElementById('authInput').value;
+    const h=await sha256(val);
+    if(h===HASH){
+      sessionStorage.setItem(KEY,'1');
+      unlock();
+    }else{
+      document.getElementById('authError').style.display='block';
+      document.getElementById('authInput').style.borderColor='#F43F5E';
+      document.getElementById('authInput').value='';
+      document.getElementById('authInput').focus();
+    }
+  });
+  document.getElementById('authInput').focus();
+})();
+</script>
+
 </body>
 </html>
