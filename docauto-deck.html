@@ -758,8 +758,8 @@ html, body {
         <p>The same code reviewer approves both PRs together. No separate doc reviewer.</p>
         <p><strong>When documentation impact exists, two parallel commits are produced, keyed off the same Linear issue ID:</strong></p>
         <ol>
-          <li>Code commit on the service repo branch (e.g. <code>feat/SCO-142-add-oauth-login</code>)</li>
-          <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-142-add-oauth-login</code>)</li>
+          <li>Code commit on the service repo branch (e.g. <code>feat/SCO-9999-add-oauth-login</code>)</li>
+          <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-9999-add-oauth-login</code>)</li>
         </ol>
         <p>If a change has no documentation impact, <code>/commit</code> skips the doc branch.</p>
 
@@ -810,7 +810,7 @@ html, body {
       <h4>Code repos</h4>
       <ul>
         <li>Each service repo (e.g. scout, vision-processor) installs <code>.claude/commands/</code> with <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code>.</li>
-        <li>Code branches use <code>&lt;type&gt;/&lt;linear-id&gt;-&lt;slug&gt;</code>, for example <code>feat/SCO-142-add-oauth-login</code>.</li>
+        <li>Code branches use <code>&lt;type&gt;/&lt;linear-id&gt;-&lt;slug&gt;</code>, for example <code>feat/SCO-9999-add-oauth-login</code>.</li>
         <li>Code repos no longer carry their own <code>docs/</code>. Docs live in the central documentation repo.</li>
       </ul>
     </div>
@@ -820,7 +820,7 @@ html, body {
         <li>Single source of truth for all documentation across products.</li>
         <li>Two audience folders: <code>user/</code> (external) and <code>dev/</code> (internal).</li>
         <li>Each product has its own subfolder under each audience: <code>user/Scout/</code>, <code>dev/Scout/</code>, and so on.</li>
-        <li>Doc branches mirror the Linear ID: <code>docs/SCO-142-add-oauth-login</code>.</li>
+        <li>Doc branches mirror the Linear ID: <code>docs/SCO-9999-add-oauth-login</code>.</li>
       </ul>
     </div>
     <div class="card card--sky">
@@ -930,6 +930,7 @@ html, body {
         <li>Policy v2 ratified <span class="linear-ref">DEV-1070</span> <span class="linear-ref">DEV-1071</span></li>
         <li><code>Visionary-Solutions/documentation</code> as the single doc source of truth</li>
         <li>GitBook spaces <code>vs-users</code> (public) and <code>vs-docs</code> (private)</li>
+        <li>GitBook hygiene complete: rename audit, sync sources, <code>wiki-content</code> archive banner <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1105</span></li>
         <li><code>/commit</code> walkthrough recorded end to end (see slide 5)</li>
       </ul>
     </div>
@@ -938,7 +939,7 @@ html, body {
       <ul>
         <li>Ship <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> as <code>.claude/commands/</code> <span class="linear-ref">DEV-1106</span></li>
         <li>Provision <code>documentation/</code> with the v2 folder structure <span class="linear-ref">DEV-1107</span></li>
-        <li>GitBook hygiene and domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1086</span></li>
+        <li>Domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1086</span></li>
       </ul>
     </div>
   </div>
@@ -960,17 +961,7 @@ html, body {
     <p>Three decisions pace the fleet rollout. None block the demo pilot.</p>
   </div>
 
-  <div class="card-grid card-grid--3" style="flex:1;">
-    <div class="card card--sky">
-      <h4>Documentation hygiene <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1105</span></h4>
-      <p>Three cleanups before the domain swap:</p>
-      <ul>
-        <li>Rename one of the two GitBook "Docs" spaces</li>
-        <li>Audit remaining GitBook sync sources</li>
-        <li>Mark the legacy <code>wiki-content</code> repo as archive-only</li>
-      </ul>
-      <p>Removes the duplicate-space confusion in GitBook and signals the canonical-direction shift to anyone reading along. Brings GitBook to a clean state for the domain cutover.</p>
-    </div>
+  <div class="card-grid card-grid--2" style="flex:1;">
     <div class="card card--amber">
       <h4>Slash commands <span class="linear-ref">DEV-1106</span></h4>
       <p>Build <code>/start-task</code>, <code>/pull-task</code>, and <code>/commit</code> as <code>.claude/commands/</code> in scout and any code repo onboarding the policy.</p>
@@ -978,7 +969,7 @@ html, body {
     </div>
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
-      <p>Point <code>visionarywiki.gitbook.io</code> at the GitBook <code>vs-users</code> site. A DNS CNAME swap, no content moves.</p>
+      <p>Point <code>docs.visionaryauto.ai</code> at the GitBook <code>vs-users</code> site. A DNS CNAME swap, no content moves.</p>
       <p>Once it lands, the cross-service URL convention from §4 resolves to a real public domain. Every published doc gets stable external links instead of placeholders.</p>
     </div>
   </div>
