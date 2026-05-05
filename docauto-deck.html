@@ -931,13 +931,14 @@ html, body {
         <li><code>Visionary-Solutions/documentation</code> as the single doc source of truth</li>
         <li>GitBook spaces <code>vs-users</code> (public) and <code>vs-docs</code> (private)</li>
         <li>GitBook hygiene complete: rename audit, sync sources, <code>wiki-content</code> archive banner <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1105</span></li>
+        <li>Slash commands <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> shipped in scout <span class="linear-ref">DEV-1106</span></li>
         <li><code>/commit</code> walkthrough recorded end to end (see slide 5)</li>
       </ul>
     </div>
     <div class="status-col status-col--pending">
       <h4>Outstanding <span class="badge badge--progress">In Progress</span></h4>
       <ul>
-        <li>Ship <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> as <code>.claude/commands/</code> <span class="linear-ref">DEV-1106</span></li>
+        <li>Factor slash commands into a shared central repo for fleet adoption <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1119</span></li>
         <li>Provision <code>documentation/</code> with the v2 folder structure <span class="linear-ref">DEV-1107</span></li>
         <li>Domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1086</span></li>
       </ul>
@@ -963,9 +964,9 @@ html, body {
 
   <div class="card-grid card-grid--2" style="flex:1;">
     <div class="card card--amber">
-      <h4>Slash commands <span class="linear-ref">DEV-1106</span></h4>
-      <p>Build <code>/start-task</code>, <code>/pull-task</code>, and <code>/commit</code> as <code>.claude/commands/</code> in scout and any code repo onboarding the policy.</p>
-      <p>Implements v2 in the developer's flow. Until the commands ship, the policy is enforceable only through reviewer attention. Each repo opts in by installing the commands.</p>
+      <h4>Slash commands distribution <span class="linear-ref">DEV-1118</span></h4>
+      <p>Slash commands ship in scout today. Distribution work factors them into a shared central repo with a versioned sync script, so other code repos adopt without copy-paste drift. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
+      <p>Phase 1 (central repo + sync script, <span class="linear-ref">DEV-1119</span>) unblocks the next consumer repo. Each phase wraps the previous; install logic stays the same end to end.</p>
     </div>
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
