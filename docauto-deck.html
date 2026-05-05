@@ -766,7 +766,7 @@ html, body {
         <h3>§3. Where docs live</h3>
         <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
 <pre>documentation/
-├── user/                  # public; per-product at &lt;product&gt;.visionaryauto.ai/docs
+├── user/                  # public; per-product at the product's public domain /docs
 │   └── &lt;Product&gt;/
 └── dev/                   # internal; visitor-auth at docs.visionaryauto.ai
     └── &lt;Product&gt;/</pre>
@@ -774,7 +774,7 @@ html, body {
 
         <h3>§4. What docs contain</h3>
         <ol>
-          <li><strong>Cross-service links use URLs, not relative file paths.</strong> Internal docs link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>; public docs link to the target product's docs path (e.g. <code>scout.visionaryauto.ai/docs/...</code>).</li>
+          <li><strong>Cross-service links use URLs, not relative file paths.</strong> Internal docs link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>; public docs link to the target product's public docs path (e.g. <code>scoutautos.com/docs/...</code> for Scout).</li>
           <li><strong>Environment tags on infra details.</strong> Name the target explicitly ("on EC2," "post-EKS migration").</li>
         </ol>
 
@@ -786,7 +786,7 @@ html, body {
         <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code>. Two destinations by audience:</p>
         <ul>
           <li><code>dev/</code> → <code>docs.visionaryauto.ai</code> via the <code>vs-docs</code> space. Internal, visitor-auth gated.</li>
-          <li><code>user/</code> → <code>&lt;product&gt;.visionaryauto.ai/docs</code> per product (e.g. <code>scout.visionaryauto.ai</code> is live; public docs at <code>scout.visionaryauto.ai/docs</code>).</li>
+          <li><code>user/</code> → the product's public domain at <code>/docs</code> per product (e.g. <code>scoutautos.com/docs</code> for Scout). Each product owns its own public domain.</li>
         </ul>
       </div>
     </div>
@@ -895,7 +895,7 @@ html, body {
       <ul>
         <li>Audience: external consumers, sales, stakeholders.</li>
         <li>Path: <code>documentation/user/&lt;Product&gt;/</code> (e.g. <code>user/Scout/</code>).</li>
-        <li>Published per product at <code>&lt;product&gt;.visionaryauto.ai/docs</code> (e.g. <code>scout.visionaryauto.ai</code> is live; public docs at <code>scout.visionaryauto.ai/docs</code>).</li>
+        <li>Published at the product's public domain at <code>/docs</code> (e.g. <code>scoutautos.com/docs</code> for Scout). Each product owns its own public domain.</li>
         <li>Each per-product public surface is tracked independently.</li>
       </ul>
     </div>
@@ -975,7 +975,7 @@ html, body {
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
       <p><code>docs.visionaryauto.ai</code> is wired to the GitBook <code>vs-docs</code> site (internal, visitor-auth). DNS plumbing is live; the publish step is the remaining work.</p>
-      <p>Public per-product surfaces (e.g. <code>scout.visionaryauto.ai</code>) are tracked independently. Once <code>docs.visionaryauto.ai</code> publishes, the §4 cross-service URL convention resolves end to end.</p>
+      <p>Public per-product surfaces are tracked independently. Each product has its own public domain (e.g. <code>scoutautos.com</code> for Scout); public docs land at <code>/docs</code> under that domain. Once <code>docs.visionaryauto.ai</code> publishes, the §4 cross-service URL convention resolves end to end.</p>
     </div>
   </div>
 </section>
