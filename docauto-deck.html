@@ -685,7 +685,7 @@ html, body {
     <div class="card card--violet">
       <h4>What happens today</h4>
       <ul>
-        <li>Sampled 47 active repos. Of the 19 with a <code>docs/</code> folder, drift ranges from 0 to 266 days behind their last code commit. The other 28 don't track docs at all.</li>
+        <li>Sampled active repos: most don't have a <code>docs/</code> folder, and the ones that do drift behind their code by days to months. Specifics in <code>docs-drift-audit.md</code>.</li>
         <li>Markdown uses a mix of URLs and relative paths. Neither points at a single shared docs domain today. <span class="linear-ref">DEV-1086</span></li>
         <li>Not all command blocks in infra docs name their target environment. Commands written for EC2 can rot at the EKS cutover, for example.</li>
         <li>No global rule for when docs are required, who writes them, or where they live.</li>
