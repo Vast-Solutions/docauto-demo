@@ -766,15 +766,15 @@ html, body {
         <h3>§3. Where docs live</h3>
         <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
 <pre>documentation/
-├── user/                  # outside-facing, public GitBook space
+├── user/                  # public; per-product at &lt;product&gt;.visionaryauto.ai/docs
 │   └── &lt;Product&gt;/
-└── dev/                   # on-team, private GitBook space
+└── dev/                   # internal; visitor-auth at docs.visionaryauto.ai
     └── &lt;Product&gt;/</pre>
         <p>Pick the folder by audience. <code>user/</code> for external consumers. <code>dev/</code> for internal developers.</p>
 
         <h3>§4. What docs contain</h3>
         <ol>
-          <li><strong>Cross-service links use URLs.</strong> Link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>, not relative file paths.</li>
+          <li><strong>Cross-service links use URLs, not relative file paths.</strong> Internal docs link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>; public docs link to the target product's docs path (e.g. <code>scout.visionaryauto.ai/docs/...</code>).</li>
           <li><strong>Environment tags on infra details.</strong> Name the target explicitly ("on EC2," "post-EKS migration").</li>
         </ol>
 
@@ -783,7 +783,11 @@ html, body {
         <p>When documentation impact exists, both PRs are approved as a unit. No CI gate in v2.</p>
 
         <h3>§6. Publishing</h3>
-        <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> to <code>docs.visionaryauto.ai</code>. <code>user/</code> public at the root, <code>dev/</code> access-controlled under a private space.</p>
+        <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code>. Two destinations by audience:</p>
+        <ul>
+          <li><code>dev/</code> → <code>docs.visionaryauto.ai</code> via the <code>vs-docs</code> space. Internal, visitor-auth gated.</li>
+          <li><code>user/</code> → <code>&lt;product&gt;.visionaryauto.ai/docs</code> per product (e.g. <code>scout.visionaryauto.ai</code> is live; public docs at <code>scout.visionaryauto.ai/docs</code>).</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -887,21 +891,21 @@ html, body {
 
   <div class="card-grid card-grid--2" style="flex:1;">
     <div class="card card--emerald">
-      <h4><code>user/</code> &middot; public site</h4>
+      <h4><code>user/</code> &middot; public, per-product</h4>
       <ul>
         <li>Audience: external consumers, sales, stakeholders.</li>
         <li>Path: <code>documentation/user/&lt;Product&gt;/</code> (e.g. <code>user/Scout/</code>).</li>
-        <li>GitBook space: <code>vs-users</code> (public).</li>
-        <li>Published at <code>docs.visionaryauto.ai</code>. Anyone with the URL can read.</li>
+        <li>Published per product at <code>&lt;product&gt;.visionaryauto.ai/docs</code> (e.g. <code>scout.visionaryauto.ai</code> is live; public docs at <code>scout.visionaryauto.ai/docs</code>).</li>
+        <li>Each per-product public surface is tracked independently.</li>
       </ul>
     </div>
     <div class="card card--violet">
-      <h4><code>dev/</code> &middot; internal workspace</h4>
+      <h4><code>dev/</code> &middot; internal, visitor-auth</h4>
       <ul>
         <li>Audience: internal developers across teams.</li>
         <li>Path: <code>documentation/dev/&lt;Product&gt;/</code> plus cross-cutting paths like <code>dev/Architecture/</code> and <code>dev/Decisions/</code>.</li>
-        <li>GitBook space: <code>vs-docs</code> (private).</li>
-        <li>No public URL. Readable inside the GitBook workspace by logged-in org members only.</li>
+        <li>GitBook space: <code>vs-docs</code> (visitor-auth).</li>
+        <li>Published at <code>docs.visionaryauto.ai</code>. URL is gated; org members auth in to read.</li>
       </ul>
     </div>
   </div>
@@ -940,7 +944,7 @@ html, body {
       <ul>
         <li>Factor slash commands into a shared central repo for fleet adoption <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1119</span></li>
         <li>Provision <code>documentation/</code> with the v2 folder structure <span class="linear-ref">DEV-1107</span></li>
-        <li>Domain cutover to <code>docs.visionaryauto.ai</code> <span class="linear-ref">DEV-1086</span></li>
+        <li>Publish <code>docs.visionaryauto.ai</code> (DNS wired to GitBook <code>vs-docs</code>; publish step remaining) <span class="linear-ref">DEV-1086</span></li>
       </ul>
     </div>
   </div>
@@ -970,8 +974,8 @@ html, body {
     </div>
     <div class="card card--violet">
       <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
-      <p>Point <code>docs.visionaryauto.ai</code> at the GitBook <code>vs-users</code> site. A DNS CNAME swap, no content moves.</p>
-      <p>Once it lands, the cross-service URL convention from §4 resolves to a real public domain. Every published doc gets stable external links instead of placeholders.</p>
+      <p><code>docs.visionaryauto.ai</code> is wired to the GitBook <code>vs-docs</code> site (internal, visitor-auth). DNS plumbing is live; the publish step is the remaining work.</p>
+      <p>Public per-product surfaces (e.g. <code>scout.visionaryauto.ai</code>) are tracked independently. Once <code>docs.visionaryauto.ai</code> publishes, the §4 cross-service URL convention resolves end to end.</p>
     </div>
   </div>
 </section>
