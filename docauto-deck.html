@@ -547,6 +547,14 @@ html, body {
   text-align: center;
   min-height: 0;
 }
+.loom-frame--solo {
+  flex: 1;
+  padding: 0;
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+}
 .loom-frame iframe {
   width: 100%;
   height: 100%;
@@ -685,21 +693,17 @@ html, body {
     <div class="card card--violet">
       <h4>What happens today</h4>
       <ul>
-        <li>Sampled active repos: most don't have a <code>docs/</code> folder, and the ones that do drift behind their code by days to months. Specifics in <code>docs-drift-audit.md</code>.</li>
-        <li>Markdown uses a mix of URLs and relative paths. Neither points at a single shared docs domain today. <span class="linear-ref">DEV-1086</span></li>
-        <li>Not all command blocks in infra docs name their target environment. Commands written for EC2 can rot at the EKS cutover, for example.</li>
-        <li>No global rule for when docs are required, who writes them, or where they live.</li>
+        <li>Docs drift because they live separately from the commits that change behavior.</li>
+        <li>Cross-service references break when repos move.</li>
+        <li>No shared rule for when docs are required.</li>
       </ul>
     </div>
     <div class="card card--emerald">
       <h4>What we want instead</h4>
       <ul>
-        <li>Docs ship as a parallel commit alongside code, keyed by the same Linear issue ID.</li>
-        <li>One central knowledge base. Cross-service references resolve through a single shared docs domain, so they survive repo moves.</li>
-        <li>Command blocks name their environment explicitly.</li>
-        <li>Shared written rules for when docs are required, who writes them, and where they live.</li>
-        <li>One slash command at commit time wraps the doc decision into the commit gesture.</li>
-        <li>Workflow-as-a-Service, Onboarding, and IDP can use the same in-flow pattern.</li>
+        <li>Docs ship in the same commit gesture as the code that demands them.</li>
+        <li>One central source of truth, one shared docs domain.</li>
+        <li>The same in-flow pattern extends to Workflow-as-a-Service, Onboarding, and IDP.</li>
       </ul>
     </div>
   </div>
@@ -806,34 +810,25 @@ html, body {
 
   <div class="slide-header">
     <h2>High level architecture</h2>
-    <p>Two sessions, two repos. The Linear issue ID is the connective tissue between code changes and documentation changes.</p>
+    <p>One commit gesture, two parallel PRs, one published output. The Linear issue ID glues code and documentation end to end.</p>
   </div>
 
-  <div class="card-grid card-grid--3" style="flex:1;">
-    <div class="card card--violet">
-      <h4>Code repos</h4>
-      <ul>
-        <li>Each service repo (e.g. scout, vision-processor) installs <code>.claude/commands/</code> with <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code>.</li>
-        <li>Code branches use <code>&lt;type&gt;/&lt;linear-id&gt;-&lt;slug&gt;</code>, for example <code>feat/SCO-9999-add-oauth-login</code>.</li>
-        <li>Code repos no longer carry their own <code>docs/</code>. Docs live in the central documentation repo.</li>
-      </ul>
-    </div>
-    <div class="card card--emerald">
-      <h4><code>Visionary-Solutions/documentation</code></h4>
-      <ul>
-        <li>Single source of truth for all documentation across products.</li>
-        <li>Two audience folders: <code>user/</code> (external) and <code>dev/</code> (internal).</li>
-        <li>Each product has its own subfolder under each audience: <code>user/Scout/</code>, <code>dev/Scout/</code>, and so on.</li>
-        <li>Doc branches mirror the Linear ID: <code>docs/SCO-9999-add-oauth-login</code>.</li>
-      </ul>
-    </div>
-    <div class="card card--sky">
-      <h4>Connective tissue</h4>
-      <ul>
-        <li>The Linear issue ID is the same on the code branch and the doc branch. One identifier links the two PRs.</li>
-        <li>The <code>/commit</code> session reviews the diff against the developer's description, decides whether docs are needed, and proposes both commit messages in one approval.</li>
-        <li>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code> on merge.</li>
-      </ul>
+  <div class="mermaid-wrap">
+    <div class="mermaid">
+flowchart LR
+  A["Developer<br/>at commit time"] --> B["/commit decides<br/>doc impact"]
+  B --> C["Two PRs<br/>linked by one Linear ID"]
+  C --> D["Reviewer approves<br/>both as a unit"]
+  D --> E["GitBook publishes<br/>internal + public docs"]
+
+  classDef violet fill:#EDE9FE,stroke:#7C3AED,color:#4C1D95,stroke-width:1.5px
+  classDef emerald fill:#D1FAE5,stroke:#059669,color:#064E3B,stroke-width:1.5px
+  classDef sky fill:#DBEAFE,stroke:#2563EB,color:#1E3A8A,stroke-width:1.5px
+  classDef amber fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:1.5px
+  class A violet
+  class B,C sky
+  class D emerald
+  class E amber
     </div>
   </div>
 </section>
@@ -855,21 +850,8 @@ html, body {
     <p>From <code>/start-task</code> to <code>/commit</code>, end to end. <span class="linear-ref">DEV-1075</span></p>
   </div>
 
-  <div class="demo-layout">
-    <div class="walkthrough-card">
-      <ol>
-        <li>Developer runs <code>/start-task</code> (or <code>/pull-task</code>). Claude creates a Linear issue, generates up to five subtasks, transitions the parent to In Progress, and cuts the scout branch.</li>
-        <li>Developer writes code through the subtasks. Session ends with the working tree dirty, no commit.</li>
-        <li>Developer opens a fresh session and runs <code>/commit</code>. Claude reads the diff, parses the Linear issue ID from the branch name, and reconciles the diff against the developer's description.</li>
-        <li>Claude decides whether documentation impact exists. If it does, Claude proposes the doc branch name, the doc edits in <code>Visionary-Solutions/documentation</code>, and the doc commit message alongside the scout commit message in a single approval block.</li>
-        <li>On approval, commits land in both repos. The Linear issue transitions to In Review.</li>
-        <li>Developer pushes both repos manually and opens PRs in each. The same code reviewer approves both PRs together.</li>
-        <li>On merge, GitBook syncs <code>documentation/</code> and the docs publish to <code>docs.visionaryauto.ai</code>.</li>
-      </ol>
-    </div>
-    <div class="loom-frame" id="loom-frame">
-      <iframe src="https://www.loom.com/embed/20016e6dec78491d9606ba8ac9bd6ecf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-    </div>
+  <div class="loom-frame loom-frame--solo" id="loom-frame">
+    <iframe src="https://www.loom.com/embed/20016e6dec78491d9606ba8ac9bd6ecf" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
   </div>
 </section>
 
