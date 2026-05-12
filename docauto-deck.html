@@ -733,81 +733,66 @@ html, body {
     <a class="topbar-brand" href="index.html" title="Back to home"><span class="home-arrow">&larr;</span><span>Doc Automation</span></a>
     <div class="topbar-section">
       <span class="section-pill section-pill--platform">Platform</span>
-      <span class="badge badge--live">Ratified</span>
+      <span class="badge badge--progress">Draft</span>
     </div>
   </div>
 
   <div class="slide-header">
     <h2>Documentation Policy</h2>
-    <p>v2 is short by design. Clear scope, central source of truth, low-friction enforcement.</p>
+    <p>v3 closes every gap v2 named. Same shape, complete coverage.</p>
   </div>
 
   <div class="policy-summary-grid">
     <div class="policy-highlights">
       <h4>Why it works as a governing document</h4>
       <ul>
-        <li><strong>Decisive.</strong> Required vs not-required is explicit. No judgment calls at PR time.</li>
+        <li><strong>Decisive.</strong> Required, Optional, and Not Required are explicit. The classifier is named, not implicit.</li>
         <li><strong>Centralized.</strong> All docs live in <code>Visionary-Solutions/documentation</code>. No per-repo <code>docs/</code> to drift.</li>
         <li><strong>Low-friction.</strong> The doc decision rides on the commit gesture. No new gate, no separate doc workflow to maintain.</li>
-        <li><strong>Audience-driven.</strong> <code>user/</code> and <code>dev/</code> pick by who needs to find the doc, not by what topic it covers.</li>
-        <li><strong>Honest.</strong> v2 names what it doesn't solve (the emergency hotfix path) so v3 can pick it up.</li>
+        <li><strong>Audience-driven.</strong> Each Required and Optional item names its destination folder inline (<code>user/</code> vs <code>dev/</code> subfolder).</li>
+        <li><strong>Honest.</strong> Every gap is named. The Deliberate out-of-scope section says what the policy doesn't solve; nothing is hidden.</li>
       </ul>
     </div>
     <div class="policy-artifact">
       <div class="policy-doc-mini">
-        <div class="policy-doc-section-num">DEV-1070 · v2</div>
+        <div class="policy-doc-section-num">DEV-1128 · v3 (draft)</div>
         <h2>Documentation Policy</h2>
 
         <h3>§1. When docs are required</h3>
-        <p><strong>Required</strong></p>
-        <ul>
-          <li>New user-facing feature or capability</li>
-          <li>Breaking change to a public API or interface</li>
-          <li>New service or infrastructure component</li>
-          <li>Config change that affects other services</li>
-        </ul>
-        <p><strong>Not required</strong></p>
-        <ul>
-          <li>Bug fixes with no user-visible behavior change</li>
-          <li>Refactors that preserve existing behavior</li>
-          <li>Dependency bumps, internal tooling, CI-only changes</li>
-        </ul>
+        <p><strong>Required → <code>user/&lt;Product&gt;/</code>:</strong> new user-facing feature or capability; breaking change to an externally-consumed API.</p>
+        <p><strong>Required → <code>dev/&lt;Product&gt;/</code></strong> (or <code>dev/Architecture/</code> if cross-cutting)<strong>:</strong> breaking change to an internally-consumed cross-service API; new service or infrastructure component; config change that affects other services.</p>
+        <p><strong>Optional</strong> (<code>/commit</code> asks; default no): ADRs → <code>dev/Decisions/</code>; internal postmortems → <code>dev/Operations/</code>; archaeology and tribal knowledge → <code>dev/&lt;Product&gt;/</code>.</p>
+        <p><strong>Not required:</strong> bug fixes with no user-visible change, behavior-preserving refactors, dep bumps, CI-only.</p>
 
         <h3>§2. Who is responsible</h3>
-        <p>The developer runs <code>/commit</code> at commit time. Claude reviews the diff, decides whether documentation impact exists, and proposes documentation updates for approval before committing.</p>
-        <p>The same code reviewer approves both PRs together. No separate doc reviewer.</p>
-        <p><strong>When documentation impact exists, two parallel commits are produced, keyed off the same Linear issue ID:</strong></p>
-        <ol>
-          <li>Code commit on the service repo branch (e.g. <code>feat/SCO-9999-add-oauth-login</code>)</li>
-          <li>Documentation commit on a parallel branch in <code>Visionary-Solutions/documentation</code> (e.g. <code>docs/SCO-9999-add-oauth-login</code>)</li>
-        </ol>
-        <p>If a change has no documentation impact, <code>/commit</code> skips the doc branch.</p>
+        <p>The developer runs <code>/commit</code>. It reads the diff and the developer's description and classifies against §1: mechanical patterns hard-skip as Not Required; description keywords (decision, rationale, postmortem) bias toward Optional; everything else is Required (and Required targets the §1-mapped folder).</p>
+        <p>Required (or opted-in Optional) produces two commits keyed off the same Linear ID: code on <code>feat/SCO-9999-...</code>, docs on <code>docs/SCO-9999-...</code> in <code>Visionary-Solutions/documentation</code>. Same reviewer approves both as a unit.</p>
 
         <h3>§3. Where docs live</h3>
-        <p>Single layer. <code>Visionary-Solutions/documentation</code> is the documentation source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
+        <p><code>Visionary-Solutions/documentation</code> is the source of truth. Code repos no longer carry their own <code>docs/</code>.</p>
 <pre>documentation/
-├── user/                  # public; per-product at the product's public domain /docs
-│   └── &lt;Product&gt;/
-└── dev/                   # internal; visitor-auth at docs.visionaryauto.ai
-    └── &lt;Product&gt;/</pre>
-        <p>Pick the folder by audience. <code>user/</code> for external consumers. <code>dev/</code> for internal developers.</p>
+├── user/&lt;Product&gt;/                  # public, per-product subdomain
+└── dev/&lt;Product&gt;/                   # internal, visitor-auth at
+    dev/Architecture/, dev/Decisions/, # docs.visionaryauto.ai
+    dev/Operations/</pre>
 
         <h3>§4. What docs contain</h3>
         <ol>
-          <li><strong>Cross-service links use URLs, not relative file paths.</strong> Internal docs link to <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>; public docs link to the target product's public docs URL (e.g. <code>docs.scoutautos.com/...</code> for Scout).</li>
+          <li><strong>Cross-service links use URLs, not relative paths.</strong> Internal → <code>docs.visionaryauto.ai/&lt;service&gt;/...</code>; public → product docs subdomain (e.g. <code>docs.scoutautos.com/...</code>).</li>
           <li><strong>Environment tags on infra details.</strong> Name the target explicitly ("on EC2," "post-EKS migration").</li>
         </ol>
 
         <h3>§5. Enforcement</h3>
-        <p><code>/commit</code> is the gate. Skipping it is a policy violation. The reviewer flags PRs that didn't go through it.</p>
-        <p>When documentation impact exists, both PRs are approved as a unit. No CI gate in v2.</p>
+        <p><code>/commit</code> is the gate for Required. Skipping it is a policy violation (except §7 hotfix). Both PRs are approved as a unit. No CI gate.</p>
 
         <h3>§6. Publishing</h3>
-        <p>GitBook auto-syncs from <code>Visionary-Solutions/documentation</code>. Two destinations by audience:</p>
-        <ul>
-          <li><code>dev/</code> → <code>docs.visionaryauto.ai</code> via the <code>vs-docs</code> space. Internal, visitor-auth gated.</li>
-          <li><code>user/</code> → the product's docs subdomain per product (e.g. <code>docs.scoutautos.com</code> for Scout). Each product owns its own docs surface.</li>
-        </ul>
+        <p>GitBook auto-syncs. <code>dev/</code> → <code>docs.visionaryauto.ai</code> via <code>vs-docs</code> (visitor-auth). <code>user/&lt;Product&gt;/</code> → product docs subdomain (e.g. <code>docs.scoutautos.com</code>).</p>
+
+        <h3>§7. Hotfix exception</h3>
+        <p>Bypassing <code>/commit</code> is allowed only for active production incidents (customer-facing impact). Authorization required; <code>doc-debt</code> follow-up issue opened, runs through <code>/commit</code> within 7 days.</p>
+
+        <h3>§8. Measurement</h3>
+        <p>Lagging indicators: reviewer comments asking about docs; open <code>doc-debt</code> count. Sustained two-quarter upward trend triggers a policy revision.</p>
       </div>
     </div>
   </div>
@@ -910,6 +895,7 @@ html, body {
     <div class="status-col status-col--pending">
       <h4>Outstanding <span class="badge badge--progress">In Progress</span></h4>
       <ul>
+        <li>Policy v3 in review: closes v2's named gaps (Optional category, §7 hotfix exception, §8 measurement, Deliberate out-of-scope) <span class="linear-ref">DEV-1128</span></li>
         <li>Graduate slash commands to dedicated <code>Visionary-Solutions/claude-commands</code> repo with tagged release and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1127</span></li>
         <li>Publish <code>docs.visionaryauto.ai</code> (DNS wired to GitBook <code>vs-docs</code>; publish step remaining) <span class="linear-ref">DEV-1086</span></li>
         <li>Separate Scout Dealer vs Shopper/Owner docs on <code>docs.scoutautos.com</code> <span class="linear-ref">DEV-1124</span></li>
