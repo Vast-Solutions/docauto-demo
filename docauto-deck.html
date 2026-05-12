@@ -885,6 +885,7 @@ html, body {
         <li>Policy v2 ratified <span class="linear-ref">DEV-1070</span> <span class="linear-ref">DEV-1071</span></li>
         <li><code>Visionary-Solutions/documentation</code> as the single doc source of truth</li>
         <li>Per-product public docs live: <code>scout-users</code> GitBook site at <code>docs.scoutautos.com</code> <span class="linear-ref">DEV-1123</span></li>
+        <li>Internal docs live at <code>docs.visionaryauto.ai</code> via GitBook <code>vs-docs</code> site (visitor-auth) <span class="linear-ref">DEV-1086</span></li>
         <li><code>documentation/</code> provisioned with v2 audience × product layout <span class="linear-ref">DEV-1107</span></li>
         <li>GitBook hygiene complete: rename audit, sync sources, <code>wiki-content</code> archive banner <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1105</span></li>
         <li>Slash commands <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> shipped in scout <span class="linear-ref">DEV-1106</span></li>
@@ -897,7 +898,6 @@ html, body {
       <ul>
         <li>Policy v3 in review: closes v2's named gaps (Optional category, §7 hotfix exception, §8 measurement, Deliberate out-of-scope) <span class="linear-ref">DEV-1128</span></li>
         <li>Graduate slash commands to dedicated <code>Visionary-Solutions/claude-commands</code> repo with tagged release and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1127</span></li>
-        <li>Publish <code>docs.visionaryauto.ai</code> (DNS wired to GitBook <code>vs-docs</code>; publish step remaining) <span class="linear-ref">DEV-1086</span></li>
         <li>Separate Scout Dealer vs Shopper/Owner docs on <code>docs.scoutautos.com</code> <span class="linear-ref">DEV-1124</span></li>
       </ul>
     </div>
@@ -924,12 +924,12 @@ html, body {
     <div class="card card--amber">
       <h4>Slash commands distribution <span class="linear-ref">DEV-1118</span></h4>
       <p>Slash commands ship in scout today. Distribution work factors them into a shared central repo with a versioned sync script, so other code repos adopt without copy-paste drift. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
-      <p>Phase 1 (central repo + sync script, <span class="linear-ref">DEV-1119</span>) unblocks the next consumer repo. Each phase wraps the previous; install logic stays the same end to end.</p>
+      <p>Phase 1 (interim install path in <code>documentation/dev/Commands/</code>, <span class="linear-ref">DEV-1119</span>) shipped. Phase 1b graduates the canonical files to a dedicated <code>Visionary-Solutions/claude-commands</code> repo with v0.1 tag and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1127</span>. Each phase wraps the previous; install logic stays the same end to end.</p>
     </div>
     <div class="card card--violet">
-      <h4>Domain cutover <span class="linear-ref">DEV-1086</span></h4>
-      <p><code>docs.visionaryauto.ai</code> is wired to the GitBook <code>vs-docs</code> site (internal, visitor-auth). DNS plumbing is live; the publish step is the remaining work.</p>
-      <p>Public per-product surfaces are tracked independently. Each product owns its own product domain (e.g. <code>scoutautos.com</code> for Scout) and its own docs subdomain (e.g. <code>docs.scoutautos.com</code>). Once <code>docs.visionaryauto.ai</code> publishes, the §4 cross-service URL convention resolves end to end.</p>
+      <h4>Policy v3 ratification <span class="linear-ref">DEV-1128</span></h4>
+      <p>v3 closes every gap v2 named: Optional category in §1, classifier disclosure in §2, hotfix exception in §7, measurement in §8, Deliberate out-of-scope section. Draft circulated 2026-05-12 (slide 3 shows the artifact); ratification follows the v2 pattern (same reviewer signs off).</p>
+      <p>Once ratified, v3 supersedes v2 as the canonical policy. The documentation repo README updates accordingly per <span class="linear-ref">DEV-1125</span>'s pattern.</p>
     </div>
   </div>
 </section>
