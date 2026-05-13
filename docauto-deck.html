@@ -739,7 +739,7 @@ html, body {
 
   <div class="slide-header">
     <h2>Documentation Policy</h2>
-    <p>v3 closes every gap v2 named. Same shape, complete coverage.</p>
+    <p>v3 closes gaps and minimizes ambiguity.</p>
   </div>
 
   <div class="policy-summary-grid">
@@ -882,23 +882,23 @@ html, body {
     <div class="status-col status-col--done">
       <h4>Built <span class="badge badge--live">Live</span></h4>
       <ul>
-        <li>Policy v2 ratified <span class="linear-ref">DEV-1070</span> <span class="linear-ref">DEV-1071</span></li>
+        <li>Policy v3 ratified <span class="linear-ref">DEV-1128</span></li>
         <li><code>Visionary-Solutions/documentation</code> as the single doc source of truth</li>
         <li>Per-product public docs live: <code>scout-users</code> GitBook site at <code>docs.scoutautos.com</code> <span class="linear-ref">DEV-1123</span></li>
         <li>Internal docs live at <code>docs.visionaryauto.ai</code> via GitBook <code>vs-docs</code> site (visitor-auth) <span class="linear-ref">DEV-1086</span></li>
         <li><code>documentation/</code> provisioned with v2 audience × product layout <span class="linear-ref">DEV-1107</span></li>
         <li>GitBook hygiene complete: rename audit, sync sources, <code>wiki-content</code> archive banner <span class="linear-ref">DEV-1104</span> <span class="linear-ref">DEV-1105</span></li>
-        <li>Slash commands <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> shipped in scout <span class="linear-ref">DEV-1106</span></li>
+        <li>Skills <code>/start-task</code>, <code>/pull-task</code>, <code>/commit</code> shipped in scout <span class="linear-ref">DEV-1106</span></li>
         <li>Shared install path proven: canonical files in <code>documentation/dev/Commands/</code>, scout consumes via <code>install.sh</code> <span class="linear-ref">DEV-1119</span></li>
         <li><code>/commit</code> walkthrough recorded end to end (see slide 5)</li>
       </ul>
     </div>
     <div class="status-col status-col--pending">
       <h4>Outstanding <span class="badge badge--progress">In Progress</span></h4>
-      <ul>
-        <li>Policy v3 in review: closes v2's named gaps (Optional category, §7 hotfix exception, §8 measurement, Deliberate out-of-scope) <span class="linear-ref">DEV-1128</span></li>
-        <li>Graduate slash commands to dedicated <code>Visionary-Solutions/claude-commands</code> repo with tagged release and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1127</span></li>
+      <ul>        
+        <li>Graduate Skills to dedicated <code>Visionary-Solutions/claude-commands</code> repo with tagged release and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1118</span> <span class="linear-ref">DEV-1127</span></li>
         <li>Separate Scout Dealer vs Shopper/Owner docs on <code>docs.scoutautos.com</code> <span class="linear-ref">DEV-1124</span></li>
+        <li>Optional: Convert docauto skills to plugins and publish them to Visionary internal.</li>
       </ul>
     </div>
   </div>
@@ -922,8 +922,8 @@ html, body {
 
   <div class="card-grid card-grid--2" style="flex:1;">
     <div class="card card--amber">
-      <h4>Slash commands distribution <span class="linear-ref">DEV-1118</span></h4>
-      <p>Slash commands ship in scout today. Distribution work factors them into a shared central repo with a versioned sync script, so other code repos adopt without copy-paste drift. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
+      <h4>Skills distribution <span class="linear-ref">DEV-1118</span></h4>
+      <p>Skills ship in scout today. Distribution work factors them into a shared central repo with a versioned sync script, so other code repos adopt without copy-paste drift. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
       <p>Phase 1 (interim install path in <code>documentation/dev/Commands/</code>, <span class="linear-ref">DEV-1119</span>) shipped. Phase 1b graduates the canonical files to a dedicated <code>Visionary-Solutions/claude-commands</code> repo with v0.1 tag and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1127</span>. Each phase wraps the previous; install logic stays the same end to end.</p>
     </div>
     <div class="card card--violet">
