@@ -875,7 +875,7 @@ html, body {
 
   <div class="slide-header">
     <h2>Rollout</h2>
-    <p>v2 is on the ratification track. Fleet adoption is pull based.</p>
+    <p>v3 ratified. Fleet adoption is pull based.</p>
   </div>
 
   <div class="status-strip">
@@ -920,16 +920,20 @@ html, body {
     <p>Three decisions pace the fleet rollout. None block the demo pilot.</p>
   </div>
 
-  <div class="card-grid card-grid--2" style="flex:1;">
+  <div class="card-grid card-grid--3" style="flex:1;">
     <div class="card card--amber">
       <h4>Skills distribution <span class="linear-ref">DEV-1118</span></h4>
-      <p>Skills ship in scout today. Distribution work factors them into a shared central repo with a versioned sync script, so other code repos adopt without copy-paste drift. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
-      <p>Phase 1 (interim install path in <code>documentation/dev/Commands/</code>, <span class="linear-ref">DEV-1119</span>) shipped. Phase 1b graduates the canonical files to a dedicated <code>Visionary-Solutions/claude-commands</code> repo with v0.1 tag and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1127</span>. Each phase wraps the previous; install logic stays the same end to end.</p>
+      <p>Skills ship in scout today. Phase 1 (interim install path in <code>documentation/dev/Commands/</code>, <span class="linear-ref">DEV-1119</span>) shipped. Phase 1b graduates the canonical files to a dedicated <code>Visionary-Solutions/claude-commands</code> repo with v0.1 tag and <code>catalog-info.yaml</code> <span class="linear-ref">DEV-1127</span>. Migration path leads to IDP-distributed golden paths once the platform tile lands.</p>
     </div>
     <div class="card card--violet">
-      <h4>Policy v3 ratification <span class="linear-ref">DEV-1128</span></h4>
-      <p>v3 closes every gap v2 named: Optional category in §1, classifier disclosure in §2, hotfix exception in §7, measurement in §8, Deliberate out-of-scope section. Draft circulated 2026-05-12 (slide 3 shows the artifact); ratification follows the v2 pattern (same reviewer signs off).</p>
-      <p>Once ratified, v3 supersedes v2 as the canonical policy. The documentation repo README updates accordingly per <span class="linear-ref">DEV-1125</span>'s pattern.</p>
+      <h4>Pilot activation <span class="linear-ref">DEV-1075</span></h4>
+      <p>With v3 ratified, the next gate is proving the full workflow end to end on a real Linear-tracked task. A single developer runs <code>/start-task</code>, codes through subtasks, then <code>/commit</code> in a fresh session. Both PRs land together; GitBook auto-syncs on merge.</p>
+      <p>Scope is narrow on purpose: one developer, one change, full v3 flow. The readout informs broader onboarding across other code repos.</p>
+    </div>
+    <div class="card card--sky">
+      <h4>Publish as Claude Code plugin <span class="linear-ref">DEV-1120</span></h4>
+      <p>After <span class="linear-ref">DEV-1127</span> lands, publish the <code>claude-commands</code> repo as a Claude Code plugin. Add <code>.claude-plugin/plugin.json</code> and a team marketplace; pre-enable auto-update so consumers stay current at session start with no manual command.</p>
+      <p>Commands become namespaced (<code>/visionary:start-task</code>). Same primitive, broader reach: any new repo installs the plugin and is in the docauto loop.</p>
     </div>
   </div>
 </section>
